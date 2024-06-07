@@ -1,0 +1,98 @@
+@NhsNumber=9820000076
+
+# Staging Request Path:
+
+# API Management -> Front Door (Optional) -> Function App
+# BookingsGet
+GET {{HostAddress}}/bookings/{{NhsNumber}}
+Subscription-Key: {{ApiManagementSubscriptionKey}}
+X-Functions-Key: {{FunctionAppKey}}
+
+###
+
+# BookingsProbe
+# Not configured in API Management or front door
+GET {{HostAddress}}/bookings-probe
+Subscription-Key: {{ApiManagementSubscriptionKey}}
+X-Functions-Key: {{FunctionAppKey}}
+
+###
+
+# Bookings
+POST {{HostAddress}}/bookings
+Subscription-Key: {{ApiManagementSubscriptionKey}}
+X-Functions-Key: {{FunctionAppKey}}
+
+{
+  "NHSNumber": "{{NhsNumber}}",
+  "CustomerId": "test",
+  "CaseId": "test",
+  "Status": "test",
+  "ServiceType": "",
+  "AppointmentDate": "2099-01-01T07:00:00",
+  "DateCreated": "2099-01-01T07:00:00",
+  "UnitPath": "",
+  "UnitName": "",
+  "ODSCode": "test",
+  "DoseSequence": "test",
+  "VaccineType": "test",
+  "DateOfBirth": "2000-01-01",
+  "CallCentreBooking": false,
+  "CallCentreEmail": "",
+  "SelfReferalOccupation": "",
+  "ReturningCitizen": false,
+  "Campaign": "",
+  "Mobile": "",
+  "Email": "",
+  "LandLine": "",
+  "CancellationReason": null,
+  "ServiceName": "",
+  "ServiceExtRef": "",
+  "AppBooking": false
+}
+
+###
+
+# Callback
+# Not configured in API Management or front door
+# Code says obsolete and use notify instead
+POST {{HostAddress}}/Callback?source=test
+Subscription-Key: {{ApiManagementSubscriptionKey}}
+X-Functions-Key: {{FunctionAppKey}}
+Authorization: {{EnvironmentVariableBearerToken}}
+
+{
+  "id": "123",
+  "reference": "",
+  "to": "",
+  "source": "",
+  "status": "",
+  "notification_type": "",
+  "created_at": "2024-02-28T01:02:03",
+  "completed_at": "2024-02-28T01:02:03",
+  "sent_at": "2024-02-28T01:02:03",
+  "template_id": "",
+  "template_version": ""
+}
+
+###
+# Notify
+# Not configured in API Management
+POST {{HostAddress}}/notify?source=test
+Subscription-Key: {{ApiManagementSubscriptionKey}}
+X-Functions-Key: {{FunctionAppKey}}
+Authorization: {{EnvironmentVariableBearerToken}}
+
+{
+  "id": "123",
+  "reference": "",
+  "to": "",
+  "source": "",
+  "status": "",
+  "notification_type": "",
+  "created_at": "2024-02-28T01:02:03",
+  "completed_at": "2024-02-28T01:02:03",
+  "sent_at": "2024-02-28T01:02:03",
+  "template_id": "",
+  "template_version": ""
+}
